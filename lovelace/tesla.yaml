@@ -1,0 +1,158 @@
+views:
+  - theme: Backend-selected
+    title: Tesla
+    icon: mdi:car
+    path: tesla
+    badges: []
+    cards:
+      - type: custom:button-card
+        name: Voltar
+        icon: mdi:arrow-left
+        tap_action:
+          action: navigate
+          navigation_path: /lovelace/tablet
+        styles:
+          grid:
+            - grid-template-areas: '"i n"'
+            - grid-template-columns: 25% 75%
+            - height: 60px
+            - margin-left: 10px
+          name:
+            - justify-self: start
+            - font-size: 30px
+            - margin-left: '-50px'
+          icon:
+            - margin-left: 7px
+      - type: vertical-stack
+        cards:
+          - type: picture-entity
+            name: Tesla Model Y
+            show_state: true
+            show_name: true
+            camera_view: auto
+            entity: person.tesla
+            image: /local/tesla.png
+          - type: map
+            aspect_ratio: '16:9'
+            default_zoom: 13
+            entities:
+              - person.tesla
+          - type: custom:bar-card
+            width: 70%
+            entities:
+              - name: Bateria
+                entity: sensor.tesla_model_y_battery_sensor
+              - name: Autonomia
+                entity: sensor.tesla_model_y_range_sensor
+                max: 487
+            positions:
+              icon: 'off'
+              indicator: inside
+              name: outside
+      - type: vertical-stack
+        cards:
+          - type: entities
+            title: Carregamento
+            entities:
+              - entity: binary_sensor.tesla_model_y_charger_sensor
+                name: Carregador
+              - entity: sensor.tesla_model_y_charging_rate_power
+                name: Potência
+              - entity: sensor.tesla_model_y_charging_rate_current
+                name: Potência Corrente
+              - entity: sensor.tesla_model_y_charging_rate_voltage
+                name: Tensão
+              - entity: sensor.tesla_model_y_charging_rate_sensor
+                name: Velocidade
+          - type: custom:mini-graph-card
+            name: Histórico Bateria (7 dias)
+            lower_bound: 0
+            upper_bound: 100
+            color_thresholds:
+              - value: 0
+                color: '#d10404'
+              - value: 10
+                color: '#d10404'
+              - value: 15
+                color: '#ff9800'
+              - value: 30
+                color: '#ff9800'
+              - value: 40
+                color: '#03B14B'
+              - value: 80
+                color: '#03B14B'
+              - value: 90
+                color: '#0567d2'
+              - value: 100
+                color: '#0567d2'
+            points_per_hour: 4
+            hour24: true
+            hours_to_show: 168
+            icon: mdi:battery
+            entities:
+              - entity: sensor.tesla_model_y_battery_sensor
+                show_points: true
+          - type: custom:mini-graph-card
+            name: Odômetro (1 mês)
+            lower_bound: 0
+            points_per_hour: 2
+            icon: mdi:car
+            hours_to_show: 720
+            entities:
+              - sensor.tesla_model_y_mileage_sensor
+      - type: vertical-stack
+        cards:
+          - type: custom:simple-thermostat
+            entity: climate.tesla_model_y_hvac_climate_system
+            name: Ar Condicionado
+            header:
+              name: Ar Condicionado
+              icon: mdi:hvac
+            layout:
+              mode:
+                headings: true
+            control:
+              hvac:
+                heat_cool:
+                  name: Heat/Cool
+            sensors:
+              - entity: sensor.tesla_model_y_temperature_sensor_outside
+                name: Externa
+                icon: mdi:sun-thermometer-outline
+                decimals: 1
+          - type: custom:mini-graph-card
+            name: Temperatura (7 dias)
+            points_per_hour: 2
+            icon: mdi:thermometer
+            entities:
+              - entity: sensor.tesla_model_y_temperature_sensor_inside
+                name: Interior
+              - entity: sensor.tesla_model_y_temperature_sensor_outside
+                name: Externa
+            hour24: true
+            hours_to_show: 168
+      - type: vertical-stack
+        cards:
+          - type: entities
+            title: Portas
+            entities:
+              - entity: lock.tesla_model_y_door_lock
+                name: Portas
+              - entity: lock.tesla_model_y_trunk_lock
+                name: Porta-malas
+              - entity: lock.tesla_model_y_frunk_lock
+                name: Frunk
+              - entity: lock.tesla_model_y_charger_door_lock
+                name: Carregador
+          - type: entities
+            title: Controle
+            show_header_toggle: false
+            entities:
+              - entity: switch.tesla_model_y_charger_switch
+                name: Carregador
+              - entity: switch.tesla_model_y_maxrange_switch
+                name: Autonomia máxima
+              - entity: switch.tesla_model_y_sentry_mode_switch
+                name: Sentry Mode
+              - entity: switch.tesla_model_y_polling_switch
+                name: Poll de Dados
