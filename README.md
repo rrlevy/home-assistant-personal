@@ -4,6 +4,9 @@ This repo contains some home assistant dashboards and other stuff that I found i
 
 ## Dashboard for Tesla vehicles
 
+![Tesla Dashboard example image](https://github.com/rrlevy/home-assistant-personal/blob/main/screenshots/tesla_screenshot.png?raw=true)
+
+
 1) Install the custom Tesla integration from HACS: https://github.com/alandtse/tesla. Follow the instructions in the repo github to learn how to get your Tesla refresh token.
 
 2) Add new sensors to include charging voltage, current and power. Add the sensors below to your configuration.yaml file. Remember to replace "tesla_model_y" with the name of the car you assigned when installing the Tesla integration.
@@ -38,7 +41,8 @@ This repo contains some home assistant dashboards and other stuff that I found i
 
 4) Upload an image of your car to the config/www folder
 
-5) Add your dashboard in the RAW Editor, copying the contents of the file [tesla.yml](https://github.com/rrlevy/home-assistant-personal/blob/main/lovelace/tela.yaml) in the place you want, inside the "views" list of dashboards. Remember to replace on that dashboard:
+5) Add your dashboard in the RAW Editor, copying the contents of the file [tesla.yml](https://github.com/rrlevy/home-assistant-personal/blob/main/lovelace/tesla.yaml) in the place you want, inside the "views" list of dashboards. Remember to replace on that dashboard:
     - The variable name "tesla_model_y" to the one you gave to your own car
     - The car image file name "tesla.png" to the one you uploaded to the config/www folder
     - My card names are in Portuguese. You can rename them to whatever you want
+    - The line `navigation_path: /lovelace/tablet` to the address you want the back button to return to
